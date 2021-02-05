@@ -25,6 +25,9 @@ public class ModuleTopologyNode {
 	
 	@Column(name = "group_id", nullable = false)
 	private String groupId;
+
+	@Column(name = "node_level", nullable = false)
+	private Integer nodeLevel;
 	
 	@Column(name = "id", nullable = false)
 	private Integer id;
@@ -107,6 +110,14 @@ public class ModuleTopologyNode {
 		this.groupId = groupId;
 	}
 
+	public Integer getNodeLevel() {
+		return nodeLevel;
+	}
+
+	public void setNodeLevel(Integer nodeLevel) {
+		this.nodeLevel = nodeLevel;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

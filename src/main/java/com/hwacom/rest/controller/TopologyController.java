@@ -53,6 +53,7 @@ public class TopologyController {
 		// 將資料填入container
 		for(ModuleTopologyNode node:nodeList){
 			HashMap<String, Object> dict = new HashMap<String, Object>();
+			dict.put("node_level", node.getNodeLevel());
 			dict.put("id", node.getId());
 			dict.put("x", node.getxAxis());
 			dict.put("y", node.getyAxis());
@@ -94,8 +95,10 @@ public class TopologyController {
 				ModuleTopologyNode node = nodeRepository.findByUk(username, id);
 				if (node != null) {
 					try {
+						Integer lastNodeLevel = node.getNodeLevel();
 						Float lastX = node.getxAxis();
 						Float lastY = node.getyAxis();
+						node.setNodeLevel(entity.get("node_level").intValue());
 						node.setxAxis(entity.get("x").floatValue());
 						node.setyAxis(entity.get("y").floatValue());
 						node.setName(entity.get("name").textValue());
@@ -103,9 +106,9 @@ public class TopologyController {
 						node.setDeviceType(entity.get("device_type").textValue());
 						node.setDeviceId(entity.get("device_id").intValue());
 						nodeRepository.save(node);
-						infoMsg += "UK["+username+","+id+"].Node("+lastX+","+lastY+")has updated to ("+entity.get("x")+","+entity.get("y")+"). \n";
+						infoMsg += "UK["+username+","+id+"].Node("+lastX+","+lastY+")(Level:"+lastNodeLevel+")has updated to ("+entity.get("x")+","+entity.get("y")+")(Level:"+entity.get("node_level")+"). \n";
 					} catch(Exception e){
-						errMsg += "UK["+username+","+id+"].Node("+entity.get("x")+","+entity.get("y")+") occurred error. \n";
+						errMsg += "UK["+username+","+id+"].Node("+entity.get("x")+","+entity.get("y")+")(Level:"+entity.get("node_level")+") occurred error. \n";
 						continue;
 					}
 				}else {
